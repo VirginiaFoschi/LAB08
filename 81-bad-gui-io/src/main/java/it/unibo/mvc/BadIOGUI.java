@@ -10,9 +10,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
@@ -44,6 +42,41 @@ public class BadIOGUI {
         final JButton write = new JButton("Write on file");
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Part1
+        final JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        canvas.add(panel,BorderLayout.CENTER);
+        panel.add(write);
+
+        //Part2
+        final JButton read = new JButton("read");
+        panel.add(read);
+        /*read.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // TODO Auto-generated method stub
+                System.out.println("Button pressed");
+            }
+
+        }); */
+
+        //Part3
+        read.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try (BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(PATH)))) {
+                    System.out.println(r.readLine());
+                }catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+            
+        });
+        
         /*
          * Handlers
          */
