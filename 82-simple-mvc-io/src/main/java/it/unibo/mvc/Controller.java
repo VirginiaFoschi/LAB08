@@ -7,17 +7,9 @@ import java.io.*;
  */
 public class Controller {
 
-    private File f;
     private static final String SEP = File.separator;
     public static final String FILE_NAME = System.getProperty("user.home")+ SEP+"output.txt";
-
-    public Controller() {
-        this.f = new File(Controller.FILE_NAME);
-    }
-
-    public Controller(final File f) {
-        this.f= f;
-    }
+    private File f = new File(Controller.FILE_NAME);
 
     public File getFile() {
         return this.f;
@@ -34,6 +26,23 @@ public class Controller {
             System.out.println(e.toString());
         }
 
+    }
+
+    public void changeFile(final File f) {
+        this.f = f;
+    }
+
+    public void printContent() {
+        try (BufferedReader r = new BufferedReader(new InputStreamReader(new FileInputStream(f)))) {
+            
+            String line =null;
+            while((line=r.readLine()) != null) {
+                System.out.println(line);
+            }
+        }catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 
