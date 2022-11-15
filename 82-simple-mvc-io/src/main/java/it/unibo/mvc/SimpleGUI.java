@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * A very simple program using a graphical interface.
@@ -15,9 +16,10 @@ public final class SimpleGUI {
     private final JFrame frame = new JFrame("My SimpleGUI");
     private static final int PROPORTION = 5;
     private static final String SEP = File.separator;
+    private final JPanel panel = new JPanel();
+    private Controller c = new Controller();
 
     public SimpleGUI(){
-        final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         final JTextArea text = new JTextArea();
         JButton save = new JButton("Save");
@@ -31,13 +33,23 @@ public final class SimpleGUI {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // TODO Auto-generated method stub
-                String s = System.getProperty("user.home")+ SEP+text.getText();
-                File f = new File(s);
-                Controller c = new Controller(f);
-                System.out.println(c.getPath());
+                try {
+                    c.saveString(text.getText());
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
             
         });
+    }
+
+    public JPanel getMainPanel(){
+        return this.panel;
+    }
+
+    public Controller getController(){
+        return this.c;
     }
 
     private void display() {
